@@ -1,8 +1,6 @@
 # Random insignificant
-.idea/*
+.idea/
 .DS_Store
-UFS-ItemCatalogue.iml
-vcs.xml
 
 
 # Confidential
