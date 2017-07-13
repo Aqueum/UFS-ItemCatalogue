@@ -1,0 +1,48 @@
+img, embed, object, video {
+    max-width: 100%;
+}
+
+nav a, button {
+    min-width: 48px;
+    min-height: 48px;
+}
+
+
+/* Text */
+* {
+    font: 100%/1.2 "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    color: #237;
+}
+
+h1 {
+    font-size: 3em;
+    margin-bottom: 0.5em;
+    color: #459;
+}
+
+h2 {
+    font-size: 2.25em;
+    color: #67B;
+    margin-bottom: 0.25em;
+}
+
+h3 {
+    font-size: 1.9em;
+    color: #89D;
+    margin-bottom: 0.25em;
+}
+
+h4 {
+    font-size: 1.25em;
+    color: #ABF;
+    margin-bottom: 0.25em;
+}
+
+a {
+    color: #23C;
+}
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
