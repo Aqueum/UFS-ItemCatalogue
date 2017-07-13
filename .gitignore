@@ -1,5 +1,9 @@
-# Created by .ignore support plugin (hsz.mobi)
-.idea/
+# Random insignificant
+.idea/*
+.DS_Store
+UFS-ItemCatalogue.iml
+vcs.xml
+
 
 # Confidential
-
+background/
