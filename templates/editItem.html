@@ -12,6 +12,6 @@
             <input type ="text" class="form-control" maxlength="128" name="image" value="{{item.image}}">
             <button type="submit" id="submit">Save Changes</button>
         </form>
-        <a href="{{url_for('show_item',item_id = item.id)}}"><button>Cancel</button></a>
+        <a href="{{url_for('show_item', category_id = category.id, item_id = item.id)}}"><button>Cancel</button></a>
     </div>
 {% endblock %}
