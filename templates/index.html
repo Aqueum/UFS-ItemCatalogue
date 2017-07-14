@@ -1,5 +1,12 @@
 {% extends "main.html" %}
 {% block content %}
 {% include "header.html" %}
-    <h2>Hello Mum</h2>
+    <h2>Front page</h2>
+    <div>
+        <a href="{{url_for('add_category')}}">
+            <button class="btn btn-default" id="new-category">
+                Add Category
+            </button>
+        </a>
+    </div>
 {% endblock %}

@@ -12,7 +12,7 @@ class Category(Base):
     __tablename__ = 'category'
     id = Column(Integer, primary_key=True)
     name = Column(String(64), nullable=False)
-    description = Column(String)
+    description = Column(String(1024))
 
 
 # build the item table
@@ -20,10 +20,10 @@ class Item(Base):
     __tablename__ = 'item'
     id = Column(Integer, primary_key=True)
     name = Column(String(64), nullable=False)
-    description = Column(String)
-    image = Column(String)
+    description = Column(String(1024))
+    image = Column(String(128))
     # establish relationship between item and category tables
-    category_id = Column(Integer, ForeignKey('restaurant.id'))
+    category_id = Column(Integer, ForeignKey('category.id'))
     relationship = relationship(Category)
 
 
