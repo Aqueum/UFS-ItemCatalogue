@@ -36,7 +36,27 @@ def add_category():
         return render_template('newCategory.html')
 
 
-# show list of categories
+# edit a category
+@app.route("/categories/<int:category_id>/edit/", methods=['GET', 'POST'])
+def edit_category(category_id):
+    edited_category = session.query(Category).filter_by(id=category_id).one()
+    if request.method == 'POST':
+        if request.form['name'] == edited_category.name and request.form['description'] == edited_category.description:
+            return redirect(url_for('show_categories'))
+        else:
+            if request.form['name']:
+                edited_category.name = request.form['name']
+            if request.form['description']:
+                edited_category.description = request.form['description']
+            session.add(edited_category)
+            session.commit()
+            flash('Category %s edited' % edited_category.name)
+            return redirect(url_for('show_categories'))
+    else:
+        return render_template('editCategory.html', category=edited_category)
+
+
+# show category page
 @app.route("/categories/<int:category_id>")
 def show_category(category_id):
     category = session.query(Category).filter_by(id=category_id).one()

@@ -2,6 +2,7 @@
 {% block content %}
 {% include "header.html" %}
     <h2> {{ category.name }} </h2>
+    <p> {{ category.description }} </p>
 
     <div class="flash">
         {% with messages = get_flashed_messages() %}
@@ -25,9 +26,9 @@
     </div>
 
     <div>
-        <a href="{{url_for('add_category')}}">
-            <button class="btn btn-default" id="new-category">
-                Add Category
+        <a href="{{ url_for('edit_category',category_id = category.id)}}">
+            <button class="btn btn-default" id="edit-category">
+                Edit Category
             </button>
         </a>
     </div>
