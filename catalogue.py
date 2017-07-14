@@ -155,6 +155,7 @@ def show_item_json(category_id, item_id):
     item = session.query(Item).filter_by(id=item_id).one()
     return jsonify(category=category.name, item=item.serialise)
 
+
 # run flask development server
 if __name__ == '__main__':
     app.secret_key = 'aHr^8jH29Ne%k)puVr34Gj&wsh'
