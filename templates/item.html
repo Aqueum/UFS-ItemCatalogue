@@ -22,7 +22,11 @@
                 Edit {{ item.name }}
             </button>
         </form>
-
+        <form action="{{ url_for('delete_item', category_id=category.id, item_id = item.id)}}">
+            <button>
+                Delete {{ item.name }}
+            </button>
+        </form>
         <form action="{{ url_for('show_category', category_id=category.id)}}">
             <button>
                 Back
