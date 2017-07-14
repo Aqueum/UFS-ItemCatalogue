@@ -14,6 +14,14 @@ class Category(Base):
     name = Column(String(64), nullable=False)
     description = Column(String(1024))
 
+    @property
+    def serialise(self):
+        return {
+            'name': self.name,
+            'id': self.id,
+            'description': self.description,
+        }
+
 
 # build the item table
 class Item(Base):
@@ -25,6 +33,16 @@ class Item(Base):
     # establish relationship between item and category tables
     category_id = Column(Integer, ForeignKey('category.id'))
     relationship = relationship(Category)
+
+
+    @property
+    def serialise(self):
+        return {
+            'name': self.name,
+            'id': self.id,
+            'description': self.description,
+            'image': self.image,
+        }
 
 
 # Create the database engine and database

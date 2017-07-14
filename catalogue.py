@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, flash, redirect, url_for
+from flask import Flask, render_template, request, flash, redirect, url_for, jsonify
 from sqlalchemy import create_engine, asc
 from sqlalchemy.orm import sessionmaker
 from catalogue_setup import Base, Category, Item
@@ -20,6 +20,12 @@ session = DBSession()
 def show_categories():
     categories = session.query(Category).order_by(asc(Category.name))
     return render_template('categories.html', categories=categories)
+
+
+@app.route("/categories/JSON/")
+def show_categories_json():
+    categories = session.query(Category).order_by(asc(Category.name))
+    return jsonify(categories=[c.serialise for c in categories])
 
 
 # add a category
@@ -67,12 +73,19 @@ def delete_category(category_id):
         return render_template('deleteCategory.html', category=deleted_category)
 
 
-# show category page
+# show category page and its item list
 @app.route("/categories/<int:category_id>")
 def show_category(category_id):
     category = session.query(Category).filter_by(id=category_id).one()
     items = session.query(Item).filter_by(category_id=category_id).order_by(asc(Item.name))
     return render_template('category.html', category=category, items=items)
+
+
+@app.route("/categories/<int:category_id>/JSON/")
+def show_categories_json(category_id):
+    category = session.query(Category).filter_by(id=category_id).one()
+    items = session.query(Item).filter_by(category_id=category_id).order_by(asc(Item.name))
+    return jsonify(category=category.serialise, items=[i.serialise for i in items])
 
 
 # add an item
@@ -134,6 +147,13 @@ def show_item(category_id, item_id):
     category = session.query(Category).filter_by(id=category_id).one()
     item = session.query(Item).filter_by(id=item_id).one()
     return render_template('item.html', category=category, item=item)
+
+
+@app.route("/categories/<int:category_id>/<int:item_id>/JSON/")
+def show_item_json(category_id, item_id):
+    category = session.query(Category).filter_by(id=category_id).one()
+    item = session.query(Item).filter_by(id=item_id).one()
+    return jsonify(category=category.name, item=item.serialise)
 
 # run flask development server
 if __name__ == '__main__':
