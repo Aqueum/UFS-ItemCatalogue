@@ -71,7 +71,8 @@ def delete_category(category_id):
 @app.route("/categories/<int:category_id>")
 def show_category(category_id):
     category = session.query(Category).filter_by(id=category_id).one()
-    return render_template('category.html', category=category)
+    items = session.query(Item).filter_by(category_id=category_id).order_by(asc(Item.name))
+    return render_template('category.html', category=category, items=items)
 
 
 # add an item
