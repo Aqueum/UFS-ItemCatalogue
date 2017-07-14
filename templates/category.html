@@ -17,12 +17,17 @@
     </div>
 
     <div>
-        {% for category in categories %}
+        {% for item in items %}
             <a href="">
-                <h3> {{ category.name }} </h3>
+                <h3> {{ item.name }} </h3>
             </a>
-            <p> {{ category.description }} </p>
+            <p> {{ item.description }} </p>
         {% endfor %}
+        <form action="{{ url_for('add_item',category_id = category.id)}}">
+            <button>
+                Add item
+            </button>
+        </form>
     </div>
 
     <div>

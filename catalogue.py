@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, flash, redirect, url_for
 from sqlalchemy import create_engine, asc
 from sqlalchemy.orm import sessionmaker
-from catalogue_setup import Base, Category
+from catalogue_setup import Base, Category, Item
 
 # initialise flask application
 app = Flask(__name__)
@@ -72,6 +72,22 @@ def delete_category(category_id):
 def show_category(category_id):
     category = session.query(Category).filter_by(id=category_id).one()
     return render_template('category.html', category=category)
+
+
+# add an item
+@app.route("/<int:category_id>/new_item/", methods=['GET', 'POST'])
+def add_item(category_id):
+    if request.method == 'POST':
+        new_item = Item(name=request.form['name'],
+                        description=request.form['description'],
+                        image=request.form['image'],
+                        category_id=category_id)
+        session.add(new_item)
+        flash('New item %s added successfully' % new_item.name)
+        session.commit()
+        return redirect(url_for('show_category', category_id=category_id))
+    else:
+        return render_template('newItem.html')
 
 # run flask development server
 if __name__ == '__main__':
