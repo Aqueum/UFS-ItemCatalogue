@@ -1,7 +1,7 @@
 {% extends "main.html" %}
 {% block content %}
 {% include "header.html" %}
-    <h2>Categories</h2>
+    <h2> {{ category.name }} </h2>
 
     <div class="flash">
         {% with messages = get_flashed_messages() %}
@@ -17,7 +17,7 @@
 
     <div>
         {% for category in categories %}
-            <a href="{{url_for('show_category', category_id = category.id)}}">
+            <a href="http://www.aqueum.com">
                 <h3> {{ category.name }} </h3>
             </a>
             <p> {{ category.description }} </p>

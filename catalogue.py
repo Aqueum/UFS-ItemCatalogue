@@ -36,6 +36,12 @@ def add_category():
         return render_template('newCategory.html')
 
 
+# show list of categories
+@app.route("/categories/<int:category_id>")
+def show_category(category_id):
+    category = session.query(Category).filter_by(id=category_id).one()
+    return render_template('category.html', category=category)
+
 # run flask development server
 if __name__ == '__main__':
     app.secret_key = 'aHr^8jH29Ne%k)puVr34Gj&wsh'
