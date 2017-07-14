@@ -3,6 +3,18 @@
 {% include "header.html" %}
     <h2>Categories</h2>
 
+    <div class="flash">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul>
+                    {% for message in messages %}
+                        <li><strong> {{ message }} </strong></li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+    </div>
+
     <div>
         {% for category in categories %}
             <a href="http://www.aqueum.com">
