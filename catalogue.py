@@ -90,6 +90,38 @@ def add_item(category_id):
     else:
         return render_template('newItem.html')
 
+
+# edit an item
+@app.route("/categories/<int:category_id>/<int:item_id>/edit/", methods=['GET', 'POST'])
+def edit_item(category_id, item_id):
+    category = session.query(Category).filter_by(id=category_id).one()
+    edited_item = session.query(Item).filter_by(id=item_id).one()
+    if request.method == 'POST':
+        if request.form['name'] == edited_item.name and request.form[
+                'description'] == edited_item.description and request.form[
+                'image'] == edited_item.image:
+            return redirect(url_for('show_category', category_id=category_id))
+        else:
+            if request.form['name']:
+                edited_item.name = request.form['name']
+            if request.form['description']:
+                edited_item.description = request.form['description']
+            if request.form['image']:
+                edited_item.image = request.form['image']
+            session.add(edited_item)
+            session.commit()
+            flash('Item %s edited' % edited_item.name)
+            return redirect(url_for('show_category', category_id=category_id))
+    else:
+        return render_template('editItem.html', category=category, item=edited_item)
+
+# show item page
+@app.route("/categories/<int:category_id>/<int:item_id>")
+def show_item(category_id, item_id):
+    category = session.query(Category).filter_by(id=category_id).one()
+    item = session.query(Item).filter_by(id=item_id).one()
+    return render_template('item.html', category=category, item=item)
+
 # run flask development server
 if __name__ == '__main__':
     app.secret_key = 'aHr^8jH29Ne%k)puVr34Gj&wsh'
