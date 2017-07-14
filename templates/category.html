@@ -27,13 +27,18 @@
 
     <div>
         <a href="{{ url_for('edit_category',category_id = category.id)}}">
-            <button class="btn btn-default" id="edit-category">
+            <button>
                 Edit {{ category.name }}
             </button>
         </a>
         <a href="{{ url_for('delete_category',category_id = category.id)}}">
-            <button class="btn btn-default" id="delete-category">
+            <button>
                 Delete {{ category.name }}
+            </button>
+        </a>
+        <a href="{{ url_for('show_categories')}}">
+            <button>
+                Back
             </button>
         </a>
     </div>
