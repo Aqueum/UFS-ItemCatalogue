@@ -1,7 +1,17 @@
 {% extends "main.html" %}
 {% block content %}
 {% include "header.html" %}
-    <h2>Front page</h2>
+    <h2>Categories</h2>
+
+    <div>
+        {% for category in categories %}
+            <a href="http://www.aqueum.com">
+                <h3> {{ category.name }} </h3>
+            </a>
+            <p> {{ category.description }} </p>
+        {% endfor %}
+    </div>
+
     <div>
         <a href="{{url_for('add_category')}}">
             <button class="btn btn-default" id="new-category">

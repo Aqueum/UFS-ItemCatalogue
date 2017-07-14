@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, flash, redirect, url_for
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, asc
 from sqlalchemy.orm import sessionmaker
 from catalogue_setup import Base, Category
 
@@ -14,12 +14,15 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 
-# render index.html at root
+# show list of categories
 @app.route("/")
-def index():
-    return render_template('index.html')
+@app.route("/categories/")
+def show_categories():
+    categories = session.query(Category).order_by(asc(Category.name))
+    return render_template('categories.html', categories=categories)
 
 
+# add a category
 @app.route("/categories/new/", methods=['GET', 'POST'])
 def add_category():
     if request.method == 'POST':
@@ -28,7 +31,7 @@ def add_category():
         session.add(new_category)
         flash('New category %s added successfully' % new_category.name)
         session.commit()
-        return redirect(url_for('index'))
+        return redirect(url_for('show_categories'))
     else:
         return render_template('newCategory.html')
 
