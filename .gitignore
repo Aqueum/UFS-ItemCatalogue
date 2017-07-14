@@ -5,3 +5,5 @@
 
 # Confidential
 background/
+catalogue.db-journal
+catalogue_setup.pyc
