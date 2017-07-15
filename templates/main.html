@@ -3,9 +3,27 @@
     <head>
         <meta charset="UTF-8">
         <link rel= "stylesheet" type= "text/css"
-              href= "{{ url_for('static',filename='styles/style.css') }}?version=6">
+              href= "{{ url_for('static',filename='styles/style.css') }}?version=026">
     </head>
     <body>
+        <div id="fb-root right"></div>
+        <script>(function(d, s, id) {
+          var js, fjs = d.getElementsByTagName(s)[0];
+          if (d.getElementById(id)) return;
+          js = d.createElement(s); js.id = id;
+          js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.9&appId=335088116925168";
+          fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+        </script>
+        <div class="fb-login-button"
+             data-max-rows="1"
+             data-size="small"
+             data-button-type="login_with"
+             data-show-faces="false"
+             data-auto-logout-link="true"
+             data-use-continue-as="true"
+             data-scope="public_profile, email"
+        ></div>
         <div class="container">
             {% block content %}
             {% endblock %}

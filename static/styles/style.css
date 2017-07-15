@@ -10,7 +10,7 @@ nav a, button {
 
 /* Text */
 * {
-    font: 100%/1.2 "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font: 100% "Helvetica Neue", "Helvetica", "Arial", sans-serif;
     color: #237;
 }
 
@@ -46,4 +46,23 @@ html, body {
 
 form {
     display: inline-block;
+}
+
+.fb-login-button {
+    float: right;
+    width: 100px;
+}
+
+button {
+    background-color: #ABF;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    padding: 0px 20px;
+    text-align: center;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #459;
 }
