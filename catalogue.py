@@ -14,12 +14,6 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 
-# show login page
-@app.route("/login/")
-def login_page():
-    return render_template('fbLogin.html')
-
-
 # show list of categories
 @app.route("/")
 @app.route("/categories/")
