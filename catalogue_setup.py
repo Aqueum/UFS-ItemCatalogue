@@ -10,6 +10,7 @@ Base = declarative_base()
 # build the category table
 class Category(Base):
     __tablename__ = 'category'
+
     id = Column(Integer, primary_key=True)
     name = Column(String(64), nullable=False)
     description = Column(String(1024))
@@ -26,6 +27,7 @@ class Category(Base):
 # build the item table
 class Item(Base):
     __tablename__ = 'item'
+
     id = Column(Integer, primary_key=True)
     name = Column(String(64), nullable=False)
     description = Column(String(1024))
@@ -33,7 +35,6 @@ class Item(Base):
     # establish relationship between item and category tables
     category_id = Column(Integer, ForeignKey('category.id'))
     relationship = relationship(Category)
-
 
     @property
     def serialise(self):
@@ -44,6 +45,23 @@ class Item(Base):
             'image': self.image,
         }
 
+
+class User(Base):
+    __tablename__ = 'user'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String(250), nullable=False)
+    email = Column(String(250), nullable=False)
+    picture = Column(String(250))
+
+    @property
+    def serialise(self):
+        return {
+            'name': self.name,
+            'id': self.id,
+            'email': self.email,
+            'picture': self.picture,
+        }
 
 # Create the database engine and database
 engine = create_engine('sqlite:///catalogue.db')

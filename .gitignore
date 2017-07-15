@@ -1,9 +1,9 @@
 # Random insignificant
 .idea/
 .DS_Store
-
+catalogue.db-journal
+*.pyc
 
 # Confidential
+*secrets.json
 background/
-catalogue.db-journal
-catalogue_setup.pyc
