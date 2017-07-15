@@ -253,18 +253,31 @@ def get_user_id(email):
     try:
         user = session.query(User).filter_by(email=email).one()
         return user.id
-    except:
+    except Exception as e:
+        print e
         return None
 
 
 @app.route('/disconnect')
 def disconnect():
-    facebook_id = login_session['facebook_id']
-    access_token = login_session['access_token']
-    url = 'https://graph.facebook.com/%s/permissions?access_token=%s' % (facebook_id, access_token)
-    h = httplib2.Http()
-    result = h.request(url, 'DELETE')[1]
-    return "you have been logged out"
+    if 'provider' in login_session:
+        facebook_id = login_session['facebook_id']
+        access_token = login_session['access_token']
+        url = 'https://graph.facebook.com/%s/permissions?access_token=%s' % (facebook_id, access_token)
+        h = httplib2.Http()
+        result = h.request(url, 'DELETE')[1]
+        print "deleting " + result
+        del login_session['facebook_id']
+        del login_session['username']
+        del login_session['email']
+        del login_session['picture']
+        del login_session['user_id']
+        del login_session['provider']
+        flash("You have successfully been logged out.")
+        return redirect(url_for('show_categories'))
+    else:
+        flash("You were not logged in")
+        return redirect(url_for('show_categories'))
 
 
 # run flask development server
