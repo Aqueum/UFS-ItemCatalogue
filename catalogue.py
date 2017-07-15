@@ -156,6 +156,17 @@ def show_item_json(category_id, item_id):
     return jsonify(category=category.name, item=item.serialise)
 
 
+# open login page, and generate anti-forgery state token
+@app.route("/login")
+def login_page():
+    state = ''.join(random.choice(string.ascii_uppercase + string.digits)
+                    for x in xrange(32))
+    login_session['state'] = state
+    return render_template('fbLogin.html', STATE=state)
+
+
+
+
 # run flask development server
 if __name__ == '__main__':
     app.secret_key = 'aHr^8jH29Ne%k)puVr34Gj&wsh'
