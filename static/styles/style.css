@@ -48,9 +48,11 @@ form {
     display: inline-block;
 }
 
-.fb-login-button {
+.right {
     float: right;
-    width: 100px;
+    width: 200px;
+    text-align: right;
+    margin-right: 20px;
 }
 
 button {

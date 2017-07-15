@@ -1,0 +1,44 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+<div id="fb-root right"></div>
+<script>
+    var fb_token = "";
+    // from https://developers.facebook.com/docs/javascript/quickstart
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId            : '335088116925168',
+            autoLogAppEvents : true,
+            xfbml            : true,
+            version          : 'v2.9'
+        });
+        FB.AppEvents.logPageView();
+        // see: https://developers.facebook.com/docs/reference/javascript/FB.getLoginStatus
+        FB.Event.subscribe('auth.login', function(response) {
+            fb_token = response.authResponse.accessToken;
+        });
+    };
+
+    // from https://developers.facebook.com/docs/javascript/quickstart
+    (function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>
+<!--
+from https://developers.facebook.com/docs/facebook-login/web/login-button
+& https://developers.facebook.com/docs/facebook-login/permissions/
+-->
+<div class="fb-login-button"
+    data-max-rows="1"
+    data-size="large"
+    data-button-type="login_with"
+    data-show-faces="false"
+    data-auto-logout-link="true"
+    data-use-continue-as="true"
+    data-scope="public_profile, email"
+></div>
+{% endblock %}
