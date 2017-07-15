@@ -257,8 +257,8 @@ def get_user_id(email):
         return None
 
 
-@app.route('/fbdisconnect')
-def fbdisconnect():
+@app.route('/disconnect')
+def disconnect():
     facebook_id = login_session['facebook_id']
     access_token = login_session['access_token']
     url = 'https://graph.facebook.com/%s/permissions?access_token=%s' % (facebook_id, access_token)

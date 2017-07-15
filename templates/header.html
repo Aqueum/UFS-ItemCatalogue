@@ -1,4 +1,8 @@
 <div class="right">
-    <a href="{{ url_for('login_page') }}">Login/Logout</a>
+    {%if 'username' not in session %}
+        <a href="{{url_for('showLogin')}}">Login </a>
+    {% else %}
+        <a href="{{url_for('disconnect')}}">Logout </a>
+    {% endif %}
 </div>
 <h1>Item Catalogue</h1>
