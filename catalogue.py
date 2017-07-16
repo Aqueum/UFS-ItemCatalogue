@@ -253,8 +253,7 @@ def get_user_id(email):
     try:
         user = session.query(User).filter_by(email=email).one()
         return user.id
-    except Exception as e:
-        print e
+    except:
         return None
 
 
@@ -266,7 +265,7 @@ def disconnect():
         url = 'https://graph.facebook.com/%s/permissions?access_token=%s' % (facebook_id, access_token)
         h = httplib2.Http()
         result = h.request(url, 'DELETE')[1]
-        print "deleting " + result
+        print result
         del login_session['facebook_id']
         del login_session['username']
         del login_session['email']
