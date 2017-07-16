@@ -19,16 +19,18 @@
     <p> {{ item.description }} </p>
 
     <div>
-        <form action="{{ url_for('edit_item', category_id = category.id, item_id = item.id)}}">
-            <button>
-                Edit {{ item.name }}
-            </button>
-        </form>
-        <form action="{{ url_for('delete_item', category_id=category.id, item_id = item.id)}}">
-            <button>
-                Delete {{ item.name }}
-            </button>
-        </form>
+        {% if loggedin %}
+            <form action="{{ url_for('edit_item', category_id = category.id, item_id = item.id)}}">
+                <button>
+                    Edit {{ item.name }}
+                </button>
+            </form>
+            <form action="{{ url_for('delete_item', category_id=category.id, item_id = item.id)}}">
+                <button>
+                    Delete {{ item.name }}
+                </button>
+            </form>
+        {% endif %}
         <form action="{{ url_for('show_category', category_id=category.id)}}">
             <button>
                 Back

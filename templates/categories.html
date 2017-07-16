@@ -23,12 +23,13 @@
             <p> {{ category.description }} </p>
         {% endfor %}
     </div>
-
-    <div>
-        <a href="{{url_for('add_category')}}">
-            <button class="btn btn-default" id="new-category">
-                Add Category
-            </button>
-        </a>
-    </div>
+    {% if loggedin %}
+        <div>
+            <a href="{{url_for('add_category')}}">
+                <button class="btn btn-default" id="new-category">
+                    Add Category
+                </button>
+            </a>
+        </div>
+    {% endif %}
 {% endblock %}

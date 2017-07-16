@@ -23,24 +23,28 @@
             </a>
             <p> {{ item.description }} </p>
         {% endfor %}
-        <form action="{{ url_for('add_item', category_id = category.id)}}">
-            <button>
-                Add item
-            </button>
-        </form>
+        {% if loggedin %}
+            <form action="{{ url_for('add_item', category_id = category.id)}}">
+                <button>
+                    Add item
+                </button>
+            </form>
+        {% endif %}
     </div>
     <br>
     <div>
-        <form action="{{ url_for('edit_category', category_id = category.id)}}">
-            <button>
-                Edit {{ category.name }}
-            </button>
-        </form>
-        <form action="{{ url_for('delete_category', category_id = category.id)}}">
-            <button>
-                Delete {{ category.name }}
-            </button>
-        </form>
+        {% if loggedin %}
+            <form action="{{ url_for('edit_category', category_id = category.id)}}">
+                <button>
+                    Edit {{ category.name }}
+                </button>
+            </form>
+            <form action="{{ url_for('delete_category', category_id = category.id)}}">
+                <button>
+                    Delete {{ category.name }}
+                </button>
+            </form>
+        {% endif %}
         <form action="{{ url_for('show_categories')}}">
             <button>
                 Back

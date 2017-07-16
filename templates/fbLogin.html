@@ -40,6 +40,32 @@
                 });
             });
         });
+        FB.Event.subscribe('auth.logout', function(response) {
+            fb_token = response.authResponse.accessToken;
+            // see https://github.com/udacity/ud330/blob/master/Lesson4/step2/templates/login.html
+            FB.api('/me', function(response) {
+                console.log('Successful logout for: ' + response.name);
+                $.ajax({
+                    type: 'POST',
+                    url: '/fbdisconnect?state={{STATE}}',
+                    processData: false,
+                    data: fb_token,
+                    contentType: 'application/octet-stream; charset=utf-8',
+                    success: function(result) {
+                        // Handle or verify the server response if necessary.
+                        if (result) {
+                            $('#result').html('Logout Successful!</br>'+ result + '</br>Redirecting...')
+                            setTimeout(function() {
+                                window.location.assign("{{ url_for('show_categories')}}")
+                            }, 500);
+                        } else {
+                            $('#result').html('Failed to make a server-side call. Check your configuration and console.');
+                        }
+                    }
+
+                });
+            });
+        });
     };
 
     // from https://developers.facebook.com/docs/javascript/quickstart
