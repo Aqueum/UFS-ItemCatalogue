@@ -9,9 +9,9 @@
             <label>Description:</label>
             <input type ="text" class="form-control" maxlength="1024" name="description" value="{{item.description}}">
             <label>Image URL:</label>
-            <input type ="text" class="form-control" maxlength="128" name="image" value="{{item.image}}">
+            <input type ="text" class="form-control" maxlength="256" name="image" value="{{item.image}}">
             <label>Image credit:</label>
-            <input type ="text" class="form-control" maxlength="512" name="credit" value="{{item.credit}}>
+            <input type ="text" class="form-control" maxlength="512" name="image" value="{{item.credit}}">
             <button type="submit" id="submit">Save Changes</button>
         </form>
         <a href="{{url_for('show_item', category_id = category.id, item_id = item.id)}}"><button>Cancel</button></a>

@@ -48,7 +48,9 @@ def add_category():
     if 'username' in login_session:
         if request.method == 'POST':
             new_category = Category(name=request.form['name'],
-                                    description=request.form['description'])
+                                    description=request.form['description'],
+                                    user_id=login_session['user_id']
+                                    )
             session.add(new_category)
             flash('New category %s added successfully' % new_category.name)
             session.commit()
@@ -126,7 +128,9 @@ def add_item(category_id):
             new_item = Item(name=request.form['name'],
                             description=request.form['description'],
                             image=request.form['image'],
-                            category_id=category_id)
+                            credit=request.form['credit'],
+                            category_id=category_id,
+                            user_id=login_session['user_id'])
             session.add(new_item)
             flash('New item %s added successfully' % new_item.name)
             session.commit()
@@ -143,7 +147,7 @@ def edit_item(category_id, item_id):
     if 'username' in login_session:
         category = session.query(Category).filter_by(id=category_id).one()
         edited_item = session.query(Item).filter_by(id=item_id).one()
-        if edited_item.user_id != login_session['user_id']:
+        if edited_item.user_id is not login_session['user_id']:
             return "<script>function authorised() {alert('Only the author of an item may edit that item.');}</script><body onload='authorised()''>"
         if request.method == 'POST':
             if request.form['name'] == edited_item.name and request.form[
@@ -173,6 +177,8 @@ def delete_item(category_id, item_id):
     if 'username' in login_session:
         category = session.query(Category).filter_by(id=category_id).one()
         deleted_item = session.query(Item).filter_by(id=item_id).one()
+        if edited_item.user_id is not login_session['user_id']:
+            return "<script>function authorised() {alert('Only the author of an item may delete that item.');}</script><body onload='authorised()''>"
         if request.method == 'POST':
             session.delete(deleted_item)
             return redirect(url_for('show_category', category_id=category_id))
@@ -187,8 +193,8 @@ def delete_item(category_id, item_id):
 def show_item(category_id, item_id):
     category = session.query(Category).filter_by(id=category_id).one()
     item = session.query(Item).filter_by(id=item_id).one()
-    loggedin = 'username' in login_session
-    return render_template('item.html', category=category, item=item, loggedin=loggedin)
+    author = category.user_id == login_session['user_id']
+    return render_template('item.html', category=category, item=item, author=author)
 
 
 @app.route("/categories/<int:category_id>/<int:item_id>/JSON/")
