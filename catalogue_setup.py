@@ -53,7 +53,8 @@ class Item(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(64), nullable=False)
     description = Column(String(1024))
-    image = Column(String(128))
+    image = Column(String(256))
+    credit = Column(String(512))
     # establish relationship between tables
     category_id = Column(Integer, ForeignKey('category.id'))
     category = relationship(Category)
@@ -67,6 +68,7 @@ class Item(Base):
             'id': self.id,
             'description': self.description,
             'image': self.image,
+            'credit': self.credit,
         }
 
 
