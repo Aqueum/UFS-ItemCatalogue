@@ -9,8 +9,21 @@ An application that provides a list of items within a variety of categories.
 Registered users have the ability to post, edit and delete their own items.
 
 # Getting Started
+## vagrant server setup
+1. Install [virtual box](https://www.virtualbox.org/)
+2. Install [vagrant](https://www.vagrantup.com/downloads.html)
+3. Clone [this repo](https://github.com/Aqueum/UFS-ItemCatalogue) to your local machine
+4. Go to the [Google developer console API site](https://console.developers.google.com/apis)
+5. Navagate through Credentials > Create Credentials > OAuth Client ID > Web application, name your application `UFS-IC' and click create
+6. In the UFS-IC credentials click download json and save the file as `client_secrets.json` in the root of your repo clone
+7. Navigate to your repo clone in terminal (or your command line)
+8. Enter `vagrant up`
+9. Enter `vagrant ssh`
+10. Enter `cd /vagrant`
+11. Enter `python catalogue.py`
+
 ## create client_secrets.json
-including **find instructions**
+
 
 # Known issues
 ## Not built
