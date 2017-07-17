@@ -375,4 +375,4 @@ def disconnect():
 if __name__ == '__main__':
     app.secret_key = 'aHr^8jH29Ne%k)puVr34Gj&wsh'
     app.debug = True
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=8000)
