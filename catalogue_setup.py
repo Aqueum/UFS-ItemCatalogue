@@ -7,6 +7,25 @@ from sqlalchemy.orm import relationship
 Base = declarative_base()
 
 
+# build the user table
+class User(Base):
+    __tablename__ = 'user'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String(250), nullable=False)
+    email = Column(String(250), nullable=False)
+    picture = Column(String(250))
+
+    @property
+    def serialise(self):
+        return {
+            'name': self.name,
+            'id': self.id,
+            'email': self.email,
+            'picture': self.picture,
+        }
+
+
 # build the category table
 class Category(Base):
     __tablename__ = 'category'
@@ -37,7 +56,7 @@ class Item(Base):
     image = Column(String(128))
     # establish relationship between tables
     category_id = Column(Integer, ForeignKey('category.id'))
-    relationship = relationship(Category)
+    category = relationship(Category)
     user_id = Column(Integer, ForeignKey('user.id'))
     user = relationship(User)
 
@@ -48,25 +67,6 @@ class Item(Base):
             'id': self.id,
             'description': self.description,
             'image': self.image,
-        }
-
-
-# build the user table
-class User(Base):
-    __tablename__ = 'user'
-
-    id = Column(Integer, primary_key=True)
-    name = Column(String(250), nullable=False)
-    email = Column(String(250), nullable=False)
-    picture = Column(String(250))
-
-    @property
-    def serialise(self):
-        return {
-            'name': self.name,
-            'id': self.id,
-            'email': self.email,
-            'picture': self.picture,
         }
 
 
