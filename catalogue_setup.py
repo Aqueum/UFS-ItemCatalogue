@@ -14,6 +14,9 @@ class Category(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(64), nullable=False)
     description = Column(String(1024))
+    # establish relationship between tables
+    user_id = Column(Integer, ForeignKey('user.id'))
+    user = relationship(User)
 
     @property
     def serialise(self):
@@ -32,9 +35,11 @@ class Item(Base):
     name = Column(String(64), nullable=False)
     description = Column(String(1024))
     image = Column(String(128))
-    # establish relationship between item and category tables
+    # establish relationship between tables
     category_id = Column(Integer, ForeignKey('category.id'))
     relationship = relationship(Category)
+    user_id = Column(Integer, ForeignKey('user.id'))
+    user = relationship(User)
 
     @property
     def serialise(self):
@@ -46,6 +51,7 @@ class Item(Base):
         }
 
 
+# build the user table
 class User(Base):
     __tablename__ = 'user'
 
@@ -62,6 +68,7 @@ class User(Base):
             'email': self.email,
             'picture': self.picture,
         }
+
 
 # Create the database engine and database
 engine = create_engine('sqlite:///catalogue.db')
