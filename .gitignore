@@ -4,6 +4,10 @@
 catalogue.db-journal
 *.pyc
 
+# Backup files
+*old.*
+
 # Confidential
 *secrets.json
 background/
+
