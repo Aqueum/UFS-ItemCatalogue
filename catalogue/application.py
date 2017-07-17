@@ -16,8 +16,8 @@ app = Flask(__name__)
 
 # read in authentication client secrets
 CLIENT_ID = json.loads(
-    open('client_secrets.json', 'r').read())['web']['client_id']
-APPLICATION_NAME = "Restaurant Menu Application"
+    open('/vagrant/catalogue/client_secrets.json', 'r').read())['web']['client_id']
+APPLICATION_NAME = "UFS-IC"
 
 # connect to database & create database session
 engine = create_engine('sqlite:///catalogue.db')
@@ -109,7 +109,7 @@ def show_category(category_id):
     category = session.query(Category).filter_by(id=category_id).one()
     items = session.query(Item).filter_by(category_id=category_id).order_by(asc(Item.name))
     loggedin = 'username' in login_session
-    author = category.user_id == login_session['user_id']
+    author = category.user_id == login_session.get('user_id')
     return render_template('category.html', category=category, items=items, loggedin=loggedin, author=author)
 
 
@@ -193,7 +193,7 @@ def delete_item(category_id, item_id):
 def show_item(category_id, item_id):
     category = session.query(Category).filter_by(id=category_id).one()
     item = session.query(Item).filter_by(id=item_id).one()
-    author = category.user_id == login_session['user_id']
+    author = category.user_id == login_session.get('user_id')
     return render_template('item.html', category=category, item=item, author=author)
 
 
