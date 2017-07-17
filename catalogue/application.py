@@ -16,8 +16,7 @@ app = Flask(__name__)
 
 # read in authentication client secrets
 CLIENT_ID = json.loads(
-    open('/vagrant/catalogue/client_secrets.json', 'r').read())['web']['client_id']
-APPLICATION_NAME = "UFS-IC"
+    open('client_secrets.json', 'r').read())['web']['client_id']
 
 # connect to database & create database session
 engine = create_engine('sqlite:///catalogue.db')
@@ -67,7 +66,8 @@ def edit_category(category_id):
     if 'username' in login_session:
         edited_category = session.query(Category).filter_by(id=category_id).one()
         if edited_category.user_id != login_session['user_id']:
-            return "<script>function authorised() {alert('Only the author of a category may edit that category.');}</script><body onload='authorised()''>"
+            return "<script>function authorised() {alert('Only the author of a category may edit that category.');}" \
+                   "</script><body onload='authorised()''>"
         if request.method == 'POST':
             if request.form['name'] == edited_category.name \
                     and request.form['description'] == edited_category.description:
@@ -93,7 +93,8 @@ def delete_category(category_id):
     if 'username' in login_session:
         deleted_category = session.query(Category).filter_by(id=category_id).one()
         if deleted_category.user_id != login_session['user_id']:
-            return "<script>function authorised() {alert('Only the author of a category may delete that category.');}</script><body onload='authorised()''>"
+            return "<script>function authorised() {alert('Only the author of a category may delete that category.');}" \
+                   "</script><body onload='authorised()''>"
         if request.method == 'POST':
             session.delete(deleted_category)
             return redirect(url_for('show_categories'))
@@ -148,7 +149,8 @@ def edit_item(category_id, item_id):
         category = session.query(Category).filter_by(id=category_id).one()
         edited_item = session.query(Item).filter_by(id=item_id).one()
         if edited_item.user_id is not login_session['user_id']:
-            return "<script>function authorised() {alert('Only the author of an item may edit that item.');}</script><body onload='authorised()''>"
+            return "<script>function authorised() {alert('Only the author of an item may edit that item.');}" \
+                   "</script><body onload='authorised()''>"
         if request.method == 'POST':
             if request.form['name'] == edited_item.name and request.form[
                     'description'] == edited_item.description and request.form[
@@ -177,8 +179,9 @@ def delete_item(category_id, item_id):
     if 'username' in login_session:
         category = session.query(Category).filter_by(id=category_id).one()
         deleted_item = session.query(Item).filter_by(id=item_id).one()
-        if edited_item.user_id is not login_session['user_id']:
-            return "<script>function authorised() {alert('Only the author of an item may delete that item.');}</script><body onload='authorised()''>"
+        if delete_item.user_id is not login_session['user_id']:
+            return "<script>function authorised() {alert('Only the author of an item may delete that item.');}" \
+                   "</script><body onload='authorised()''>"
         if request.method == 'POST':
             session.delete(deleted_item)
             return redirect(url_for('show_category', category_id=category_id))
@@ -209,7 +212,7 @@ def show_item_json(category_id, item_id):
 def login_page():
     state = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(32))
     login_session['state'] = state
-    return render_template('login.html', STATE=state)
+    return render_template('login.html', STATE=state, CLIENT_ID=CLIENT_ID)
 
 
 # Google authentication
@@ -299,7 +302,8 @@ def gconnect():
     output += '!</h1>'
     output += '<img src="'
     output += login_session['picture']
-    output += ' " style = "width: 300px; height: 300px;border-radius: 150px;-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '
+    output += ' " style = "width: 300px; height: 300px;border-radius: 150px;'
+    output += '-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '
     flash("you are now logged in as %s" % login_session['username'])
     print "done!"
     return output
