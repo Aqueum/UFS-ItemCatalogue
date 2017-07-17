@@ -5,8 +5,7 @@ from sqlalchemy.orm import sessionmaker
 from catalogue_setup import Base, Category, Item, User
 import random
 import string
-from oauth2client.client import flow_from_clientsecrets
-from oauth2client.client import FlowExchangeError
+from oauth2client.client import flow_from_clientsecrets, FlowExchangeError
 import json
 import httplib2
 import requests
@@ -15,7 +14,7 @@ import requests
 # initialise flask application
 app = Flask(__name__)
 
-# read in secrets
+# read in authentication client secrets
 CLIENT_ID = json.loads(
     open('client_secrets.json', 'r').read())['web']['client_id']
 APPLICATION_NAME = "Restaurant Menu Application"
@@ -65,6 +64,8 @@ def add_category():
 def edit_category(category_id):
     if 'username' in login_session:
         edited_category = session.query(Category).filter_by(id=category_id).one()
+        if edited_category.user_id != login_session['user_id']:
+            return "<script>function authorised() {alert('Only the author of a category may edit that category.');}</script><body onload='authorised()''>"
         if request.method == 'POST':
             if request.form['name'] == edited_category.name \
                     and request.form['description'] == edited_category.description:
@@ -89,6 +90,8 @@ def edit_category(category_id):
 def delete_category(category_id):
     if 'username' in login_session:
         deleted_category = session.query(Category).filter_by(id=category_id).one()
+        if deleted_category.user_id != login_session['user_id']:
+            return "<script>function authorised() {alert('Only the author of a category may delete that category.');}</script><body onload='authorised()''>"
         if request.method == 'POST':
             session.delete(deleted_category)
             return redirect(url_for('show_categories'))
@@ -104,7 +107,8 @@ def show_category(category_id):
     category = session.query(Category).filter_by(id=category_id).one()
     items = session.query(Item).filter_by(category_id=category_id).order_by(asc(Item.name))
     loggedin = 'username' in login_session
-    return render_template('category.html', category=category, items=items, loggedin=loggedin)
+    author = category.user_id == login_session['user_id']
+    return render_template('category.html', category=category, items=items, loggedin=loggedin, author=author)
 
 
 @app.route("/categories/<int:category_id>/JSON/")
@@ -139,6 +143,8 @@ def edit_item(category_id, item_id):
     if 'username' in login_session:
         category = session.query(Category).filter_by(id=category_id).one()
         edited_item = session.query(Item).filter_by(id=item_id).one()
+        if edited_item.user_id != login_session['user_id']:
+            return "<script>function authorised() {alert('Only the author of an item may edit that item.');}</script><body onload='authorised()''>"
         if request.method == 'POST':
             if request.form['name'] == edited_item.name and request.form[
                     'description'] == edited_item.description and request.form[

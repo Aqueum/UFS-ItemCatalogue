@@ -9,9 +9,8 @@ An application that provides a list of items within a variety of categories.
 Registered users have the ability to post, edit and delete their own items.
 
 # Getting Started
-## Cookies
-Either allow 3rd party cookies or allow [*.]facebook.com
-
+## create client_secrets.json
+including **find instructions**
 
 # Known issues
 ## Not built
