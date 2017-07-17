@@ -1,4 +1,5 @@
 # Random insignificant
+.vagrant/
 .idea/
 .DS_Store
 catalogue.db-journal
