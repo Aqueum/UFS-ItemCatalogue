@@ -15,19 +15,26 @@ Registered users have the ability to post, edit and delete their own items.
 3. Clone [this repo](https://github.com/Aqueum/UFS-ItemCatalogue) to your local machine
 ## Get Google OAuth2 Credentials
 4. Go to the [Google developer console API site](https://console.developers.google.com/apis)
-5. Navagate through Credentials > Create Credentials > OAuth Client ID > Web application, name your application `UFS-IC' and click create
-6. In the UFS-IC credentials click download json and save the file as `client_secrets.json` in the root of your repo clone
+5. Navagate through Credentials > Create Credentials > OAuth Client ID > Web application, 
+6. Name your application `UFS-IC', 
+7. Add http://localhost:8000 as an Authorised JavaScript origin 
+8. Add http://localhost:8000/gconnect as Authorised redirect URI, and click create
+9. In the UFS-IC credentials click download json and save the file as `client_secrets.json` in the root of your repo clone
 ## Start the server
-7. Navigate to your repo clone in terminal (or your command line)
-8. Enter `vagrant up`
-9. Enter `vagrant ssh`
+10. Navigate to your repo clone in terminal (or your command line)
+11. Enter `vagrant up`
+12. Enter `vagrant ssh`
 ## Launch the database
-10. Enter `python /vagrant/catalogue/application.py`
-11. Access [localhost port 5000](http://localhost:5000) in your browser
+13. Enter `cd /vagrant/catalogue/application.py`
+14. Enter `python application.py`
+15. Access [localhost port 8000](http://localhost:8000) in your browser
 
 # Known issues
 ## Not pretty
 Given that this is a database project, I didn't spend too long on the aesthetics.  It may not be as pretty as the Project Display Example, & doesn't have a latest items display (not mentioned in the rubric) but it does include much cuter images.
+
+## Can't run via python /vagrant/catalog/application.py
+As this would require files saved in the root of the server
 
 # Files
 ## catalogue_setup.py
