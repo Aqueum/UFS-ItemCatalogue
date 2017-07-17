@@ -25,16 +25,12 @@ Registered users have the ability to post, edit and delete their own items.
 11. Enter `vagrant up`
 12. Enter `vagrant ssh`
 ## Launch the database
-13. Enter `cd /vagrant/catalogue/application.py`
-14. Enter `python application.py`
-15. Access [localhost port 8000](http://localhost:8000) in your browser
+13. Enter `python /vagrant/catalogue/application.py`
+14. Access [localhost port 8000](http://localhost:8000) in your browser
 
 # Known issues
 ## Not pretty
-Given that this is a database project, I didn't spend too long on the aesthetics.  It may not be as pretty as the Project Display Example, & doesn't have a latest items display (not mentioned in the rubric) but it does include much cuter images.
-
-## Can't run via python /vagrant/catalog/application.py
-As this would require files saved in the root of the server
+Given that this is a database project, I didn't spend too long on the aesthetics.  It may not be as pretty as the Project Display Example, & doesn't have a latest items display (not mentioned in the rubric) but it does include cute images.
 
 # Files
 ## catalogue_setup.py

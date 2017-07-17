@@ -73,5 +73,5 @@ class Item(Base):
 
 
 # Create the database engine and database
-engine = create_engine('sqlite:///catalogue.db')
+engine = create_engine('sqlite:////vagrant/catalogue/catalogue.db')
 Base.metadata.create_all(engine)

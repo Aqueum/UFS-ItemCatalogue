@@ -16,10 +16,10 @@ app = Flask(__name__)
 
 # read in authentication client secrets
 CLIENT_ID = json.loads(
-    open('client_secrets.json', 'r').read())['web']['client_id']
+    open('/vagrant/catalogue/client_secrets.json', 'r').read())['web']['client_id']
 
 # connect to database & create database session
-engine = create_engine('sqlite:///catalogue.db')
+engine = create_engine('sqlite:////vagrant/catalogue/catalogue.db')
 Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)
