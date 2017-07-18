@@ -25,12 +25,31 @@ Registered users have the ability to post, edit and delete their own items.
 11. Enter `vagrant up`
 12. Enter `vagrant ssh`
 ## Launch the database
-13. Enter `python /vagrant/catalogue/application.py`
+13. Enter `cd /vagrant/catalogue`
+13. Enter `python application.py`
 14. Access [localhost port 8000](http://localhost:8000) in your browser
 
 # Known issues
 ## Not pretty
 Given that this is a database project, I didn't spend too long on the aesthetics.  It may not be as pretty as the Project Display Example, & doesn't have a latest items display (not mentioned in the rubric) but it does include cute images.
+
+## Can't be called via 'python /vagrant/catalogue/application.py
+Current implementation gives:
+`vagrant@vagrant:~$ python /vagrant/catalogue/application.py
+Traceback (most recent call last):
+  File "/vagrant/catalogue/application.py", line 19, in <module>
+    open('catalogue/client_secrets.json', 'r').read())['web']['client_id']
+IOError: [Errno 2] No such file or directory: 'catalogue/client_secrets.json'`
+
+This can be resolved if desired by reverting to 
+`CLIENT_ID = json.loads(
+    open('/vagrant/catalogue/client_secrets.json', 'r').read())['web']['client_id']`
+and
+`engine = create_engine('sqlite:////vagrant/catalogue/catalogue.db')`
+in application.py, and
+`engine = create_engine('sqlite:////vagrant/catalogue/catalogue.db')`
+in catalogue_setup.py
+but I would love to hear of a more elegant means.
 
 # Files
 ## catalogue_setup.py
