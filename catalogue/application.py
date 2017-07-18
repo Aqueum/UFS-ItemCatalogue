@@ -424,5 +424,5 @@ def disconnect():
 # run flask development server
 if __name__ == '__main__':
     app.secret_key = 'aHr^8jH29Ne%k)puVr34Gj&wsh'
-    app.debug = True
-    app.run(host='0.0.0.0', port=8000)
+    app.debug = False
+    app.run(host='35.176.170.23', port=80)
