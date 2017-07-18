@@ -4,6 +4,7 @@
 .DS_Store
 catalogue.db-journal
 *.pyc
+venv/
 
 #ignore files we've backed up just in case
 *old.*
