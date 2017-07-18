@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, flash, redirect, url_for, jsonify, make_response
+from flask import (Flask, render_template, request, flash, redirect, url_for, jsonify, make_response
 from flask import session as login_session
 from sqlalchemy import create_engine, asc
 from sqlalchemy.orm import sessionmaker
@@ -16,10 +16,10 @@ app = Flask(__name__)
 
 # read in authentication client secrets
 CLIENT_ID = json.loads(
-    open('/vagrant/catalogue/client_secrets.json', 'r').read())['web']['client_id']
+    open('catalogue/client_secrets.json', 'r').read())['web']['client_id']
 
 # connect to database & create database session
-engine = create_engine('sqlite:////vagrant/catalogue/catalogue.db')
+engine = create_engine('sqlite:///catalogue/catalogue.db')
 Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)
