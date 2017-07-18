@@ -19,20 +19,19 @@ to your local machine
 [Google developer console API site](https://console.developers.google.com/apis)
 5. Navagate through Credentials > Create Credentials > 
 OAuth Client ID > Web application, 
-6. Name your application `UFS-IC', 
-7. Add http://localhost:8000 as an Authorised JavaScript origin 
-8. Add http://localhost:8000/gconnect as Authorised redirect URI, 
+6. Add http://localhost:8000 as an Authorised JavaScript origin 
+7. Add http://localhost:8000/gconnect as Authorised redirect URI, 
 and click create
-9. In the UFS-IC credentials click download json and save the file as 
+8. In the UFS-IC credentials click download json and save the file as 
 `client_secrets.json` in the root of your repo clone
 ## Start the server
-10. Navigate to your repo clone in terminal (or your command line)
-11. Enter `vagrant up`
-12. Enter `vagrant ssh`
+9. Navigate to your repo clone in terminal (or your command line)
+10. Enter `vagrant up`
+11. Enter `vagrant ssh`
 ## Launch the database
-13. Enter `cd /vagrant`
-14. Enter `python catalogue/application.py`
-15. Access [localhost port 8000](http://localhost:8000) in your browser
+12. Enter `cd /vagrant`
+13. Enter `python catalogue/application.py`
+14. Access [localhost port 8000](http://localhost:8000) in your browser
 
 # Known issues
 ## No longer callable via 'python /vagrant/catalogue/application.py'
