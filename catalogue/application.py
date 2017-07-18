@@ -1,4 +1,4 @@
-from flask import (Flask, render_template, request, flash, redirect, url_for, jsonify, make_response
+from flask import Flask, render_template, request, flash, redirect, url_for, jsonify, make_response
 from flask import session as login_session
 from sqlalchemy import create_engine, asc
 from sqlalchemy.orm import sessionmaker
@@ -115,7 +115,7 @@ def show_category(category_id):
 
 
 @app.route("/categories/<int:category_id>/JSON/")
-def show_categories_json(category_id):
+def show_category_json(category_id):
     category = session.query(Category).filter_by(id=category_id).one()
     items = session.query(Item).filter_by(category_id=category_id).order_by(asc(Item.name))
     return jsonify(category=category.serialise, items=[i.serialise for i in items])
