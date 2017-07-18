@@ -31,18 +31,11 @@ and click create
 12. Enter `vagrant ssh`
 ## Launch the database
 13. Enter `cd /vagrant`
-13. Enter `python catalogue/application.py`
-14. Access [localhost port 8000](http://localhost:8000) in your browser
+14. Enter `python catalogue/application.py`
+15. Access [localhost port 8000](http://localhost:8000) in your browser
 
 # Known issues
-## Not pretty
-Given that this is a database project, 
-I didn't spend too long on the aesthetics.  
-It may not be as pretty as the Project Display Example, 
-and doesn't have a latest items display (not mentioned in the rubric) 
-but it does include cute images.
-
-## No longer callable via 'python /vagrant/catalogue/application.py
+## No longer callable via 'python /vagrant/catalogue/application.py'
 Current implementation gives:
 `vagrant@vagrant:~$ python /vagrant/catalogue/application.py
 Traceback (most recent call last):
@@ -59,6 +52,13 @@ in application.py, and
 `engine = create_engine('sqlite:////vagrant/catalogue/catalogue.db')`
 in catalogue_setup.py
 but I would love to hear of a more elegant means.
+
+## Not pretty
+Given that this is a database project, 
+I didn't spend too long on the aesthetics.  
+It may not be as pretty as the Project Display Example, 
+and doesn't have a latest items display (not mentioned in the rubric) 
+but it does include cute images.
 
 # Files
 ## catalogue_setup.py
