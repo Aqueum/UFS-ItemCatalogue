@@ -237,7 +237,7 @@ def delete_item(category_id, item_id):
 def show_item(category_id, item_id):
     category = session.query(Category).filter_by(id=category_id).one()
     item = session.query(Item).filter_by(id=item_id).one()
-    author = category.user_id == login_session.get('user_id')
+    author = item.user_id == login_session.get('user_id')
     return render_template('item.html',
                            category=category,
                            item=item,
