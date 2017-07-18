@@ -36,6 +36,7 @@ class Category(Base):
     # establish relationship between tables
     user_id = Column(Integer, ForeignKey('user.id'))
     user = relationship(User)
+    items = relationship("Item", cascade="all, delete-orphan")
 
     @property
     def serialise(self):

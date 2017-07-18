@@ -97,6 +97,7 @@ def delete_category(category_id):
                    "</script><body onload='authorised()''>"
         if request.method == 'POST':
             session.delete(deleted_category)
+            session.commit()
             return redirect(url_for('show_categories'))
         else:
             return render_template('deleteCategory.html', category=deleted_category)
