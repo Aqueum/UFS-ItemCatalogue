@@ -1,11 +1,23 @@
-from flask import Flask, render_template, request, flash, redirect, url_for, jsonify, make_response
+from flask import (Flask,
+                   render_template,
+                   request,
+                   flash,
+                   redirect,
+                   url_for,
+                   jsonify,
+                   make_response)
 from flask import session as login_session
-from sqlalchemy import create_engine, asc
+from sqlalchemy import (create_engine,
+                        asc)
 from sqlalchemy.orm import sessionmaker
-from catalogue_setup import Base, Category, Item, User
+from catalogue_setup import (Base,
+                             Category,
+                             Item,
+                             User)
 import random
 import string
-from oauth2client.client import flow_from_clientsecrets, FlowExchangeError
+from oauth2client.client import (flow_from_clientsecrets,
+                                 FlowExchangeError)
 import json
 import httplib2
 import requests
@@ -32,7 +44,9 @@ session = DBSession()
 def show_categories():
     categories = session.query(Category).order_by(asc(Category.name))
     loggedin = 'username' in login_session
-    return render_template('categories.html', categories=categories, loggedin=loggedin)
+    return render_template('categories.html',
+                           categories=categories,
+                           loggedin=loggedin)
 
 
 @app.route("/categories/JSON/")
@@ -64,13 +78,16 @@ def add_category():
 @app.route("/categories/<int:category_id>/edit/", methods=['GET', 'POST'])
 def edit_category(category_id):
     if 'username' in login_session:
-        edited_category = session.query(Category).filter_by(id=category_id).one()
+        edited_category = session.query(Category).\
+            filter_by(id=category_id).one()
         if edited_category.user_id != login_session['user_id']:
-            return "<script>function authorised() {alert('Only the author of a category may edit that category.');}" \
+            return "<script>function authorised() {alert('Only " \
+                   "the author of a category may edit that category.');}" \
                    "</script><body onload='authorised()''>"
         if request.method == 'POST':
             if request.form['name'] == edited_category.name \
-                    and request.form['description'] == edited_category.description:
+                    and request.form['description'] == \
+                    edited_category.description:
                 return redirect(url_for('show_categories'))
             else:
                 if request.form['name']:
@@ -82,7 +99,8 @@ def edit_category(category_id):
                 flash('Category %s edited' % edited_category.name)
                 return redirect(url_for('show_categories'))
         else:
-            return render_template('editCategory.html', category=edited_category)
+            return render_template('editCategory.html',
+                                   category=edited_category)
     else:
         return redirect(url_for('login_page'))
 
@@ -91,16 +109,19 @@ def edit_category(category_id):
 @app.route("/categories/<int:category_id>/delete/", methods=['GET', 'POST'])
 def delete_category(category_id):
     if 'username' in login_session:
-        deleted_category = session.query(Category).filter_by(id=category_id).one()
+        deleted_category = session.query(Category).\
+            filter_by(id=category_id).one()
         if deleted_category.user_id != login_session['user_id']:
-            return "<script>function authorised() {alert('Only the author of a category may delete that category.');}" \
+            return "<script>function authorised() {alert('Only " \
+                   "the author of a category may delete that category.');}" \
                    "</script><body onload='authorised()''>"
         if request.method == 'POST':
             session.delete(deleted_category)
             session.commit()
             return redirect(url_for('show_categories'))
         else:
-            return render_template('deleteCategory.html', category=deleted_category)
+            return render_template('deleteCategory.html',
+                                   category=deleted_category)
     else:
         return redirect(url_for('login_page'))
 
@@ -109,17 +130,25 @@ def delete_category(category_id):
 @app.route("/categories/<int:category_id>")
 def show_category(category_id):
     category = session.query(Category).filter_by(id=category_id).one()
-    items = session.query(Item).filter_by(category_id=category_id).order_by(asc(Item.name))
+    items = session.query(Item).filter_by(category_id=category_id)\
+        .order_by(asc(Item.name))
     loggedin = 'username' in login_session
     author = category.user_id == login_session.get('user_id')
-    return render_template('category.html', category=category, items=items, loggedin=loggedin, author=author)
+    return render_template('category.html',
+                           category=category,
+                           items=items,
+                           loggedin=loggedin,
+                           author=author)
 
 
 @app.route("/categories/<int:category_id>/JSON/")
 def show_category_json(category_id):
     category = session.query(Category).filter_by(id=category_id).one()
-    items = session.query(Item).filter_by(category_id=category_id).order_by(asc(Item.name))
-    return jsonify(category=category.serialise, items=[i.serialise for i in items])
+    items = session.query(Item).\
+        filter_by(category_id=category_id).\
+        order_by(asc(Item.name))
+    return jsonify(category=category.serialise,
+                   items=[i.serialise for i in items])
 
 
 # add an item
@@ -144,19 +173,22 @@ def add_item(category_id):
 
 
 # edit an item
-@app.route("/categories/<int:category_id>/<int:item_id>/edit/", methods=['GET', 'POST'])
+@app.route("/categories/<int:category_id>/<int:item_id>/edit/",
+           methods=['GET', 'POST'])
 def edit_item(category_id, item_id):
     if 'username' in login_session:
         category = session.query(Category).filter_by(id=category_id).one()
         edited_item = session.query(Item).filter_by(id=item_id).one()
         if edited_item.user_id is not login_session['user_id']:
-            return "<script>function authorised() {alert('Only the author of an item may edit that item.');}" \
+            return "<script>function authorised() {alert(" \
+                   "'Only the author of an item may edit that item.');}" \
                    "</script><body onload='authorised()''>"
         if request.method == 'POST':
             if request.form['name'] == edited_item.name and request.form[
                     'description'] == edited_item.description and request.form[
                     'image'] == edited_item.image:
-                return redirect(url_for('show_category', category_id=category_id))
+                return redirect(url_for('show_category',
+                                        category_id=category_id))
             else:
                 if request.form['name']:
                     edited_item.name = request.form['name']
@@ -167,27 +199,35 @@ def edit_item(category_id, item_id):
                 session.add(edited_item)
                 session.commit()
                 flash('Item %s edited' % edited_item.name)
-                return redirect(url_for('show_category', category_id=category_id))
+                return redirect(url_for('show_category',
+                                        category_id=category_id))
         else:
-            return render_template('editItem.html', category=category, item=edited_item)
+            return render_template('editItem.html',
+                                   category=category,
+                                   item=edited_item)
     else:
         return redirect(url_for('login_page'))
 
 
 # delete an item
-@app.route("/categories/<int:category_id>/<int:item_id>/delete/", methods=['GET', 'POST'])
+@app.route("/categories/<int:category_id>/<int:item_id>/delete/",
+           methods=['GET', 'POST'])
 def delete_item(category_id, item_id):
     if 'username' in login_session:
         category = session.query(Category).filter_by(id=category_id).one()
         deleted_item = session.query(Item).filter_by(id=item_id).one()
         if delete_item.user_id is not login_session['user_id']:
-            return "<script>function authorised() {alert('Only the author of an item may delete that item.');}" \
+            return "<script>function authorised() {alert('Only the author " \
+                   "of an item may delete that item.');}" \
                    "</script><body onload='authorised()''>"
         if request.method == 'POST':
             session.delete(deleted_item)
-            return redirect(url_for('show_category', category_id=category_id))
+            return redirect(url_for('show_category',
+                                    category_id=category_id))
         else:
-            return render_template('deleteItem.html', category=category, item=deleted_item)
+            return render_template('deleteItem.html',
+                                   category=category,
+                                   item=deleted_item)
     else:
         return redirect(url_for('login_page'))
 
@@ -198,7 +238,10 @@ def show_item(category_id, item_id):
     category = session.query(Category).filter_by(id=category_id).one()
     item = session.query(Item).filter_by(id=item_id).one()
     author = category.user_id == login_session.get('user_id')
-    return render_template('item.html', category=category, item=item, author=author)
+    return render_template('item.html',
+                           category=category,
+                           item=item,
+                           author=author)
 
 
 @app.route("/categories/<int:category_id>/<int:item_id>/JSON/")
@@ -211,7 +254,8 @@ def show_item_json(category_id, item_id):
 # launch login page after generating anti-forgery state token
 @app.route("/login/")
 def login_page():
-    state = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(32))
+    state = ''.join(random.choice(string.ascii_uppercase + string.digits)
+                    for _ in range(32))
     login_session['state'] = state
     return render_template('login.html', STATE=state, CLIENT_ID=CLIENT_ID)
 
@@ -229,7 +273,8 @@ def gconnect():
 
     try:
         # Upgrade the authorization code into a credentials object
-        oauth_flow = flow_from_clientsecrets('catalogue/client_secrets.json', scope='')
+        oauth_flow = flow_from_clientsecrets('catalogue/client_secrets.json',
+                                             scope='')
         oauth_flow.redirect_uri = 'postmessage'
         credentials = oauth_flow.step2_exchange(code)
     except FlowExchangeError:
@@ -269,8 +314,8 @@ def gconnect():
     stored_credentials = login_session.get('credentials')
     stored_gplus_id = login_session.get('gplus_id')
     if stored_credentials is not None and gplus_id == stored_gplus_id:
-        response = make_response(json.dumps('Current user is already connected.'),
-                                 200)
+        response = make_response(json.dumps('Current user is '
+                                            'already connected.'), 200)
         response.headers['Content-Type'] = 'application/json'
         return response
 

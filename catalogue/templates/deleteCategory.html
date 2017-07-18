@@ -9,9 +9,12 @@
         Potentially including items created by other users.
     </p>
     <div>
-        <form action="{{ url_for('delete_category',category_id = category.id)}}" method="post">
+        <form action="{{ url_for('delete_category',
+        category_id = category.id)}}" method="post">
             <button>Delete</button>
         </form>
-        <a href="{{url_for('show_category',category_id = category.id)}}"><button>Cancel</button></a>
+        <a href="{{url_for('show_category',category_id = category.id)}}">
+            <button>Cancel</button>
+        </a>
     </div>
 {% endblock %}
