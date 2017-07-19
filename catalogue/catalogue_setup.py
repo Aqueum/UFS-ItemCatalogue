@@ -74,5 +74,5 @@ class Item(Base):
 
 
 # Create the database engine and database
-engine = create_engine('sqlite:///catalogue/catalogue.db')
+engine = create_engine('postgresql://puser:Hj8%rfHyMX43UtrNJi*@localhost/pcat')
 Base.metadata.create_all(engine)

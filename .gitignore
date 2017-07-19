@@ -5,6 +5,7 @@
 catalogue.db-journal
 *.pyc
 venv/
+logs/
 
 #ignore files we've backed up just in case
 *old.*
